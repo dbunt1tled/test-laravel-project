@@ -2,71 +2,62 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
+use App\Http\Requests\Auth\RegisterRequest;
+use App\Mail\Auth\VerifyMail;
+use App\Entity\User;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Foundation\Auth\RegistersUsers;
+use App\UseCases\Auth\RegisterService;
+use Illuminate\Auth\Events\Registered;
 
 class RegisterController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Register Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles the registration of new users as well as their
-    | validation and creation. By default this controller uses a trait to
-    | provide this functionality without requiring any additional code.
-    |
-    */
+    private $registerService;
 
-    use RegistersUsers;
-
-    /**
-     * Where to redirect users after registration.
-     *
-     * @var string
-     */
     protected $redirectTo = '/cabinet';
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    public function __construct(RegisterService $registerService)
     {
+        $this->registerService = $registerService;
         $this->middleware('guest');
     }
 
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    protected function validator(array $data)
+    public function showRegistrationForm()
     {
-        return Validator::make($data, [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
-        ]);
+        return view('auth.register');
     }
 
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return \App\User
-     */
+    public function register(RegisterRequest $request)
+    {
+        //валидация происходит автоматически
+        $this->registerService->register($request);
+        flash('Проверьте указанный электронный ящик, туда отправлена ссылка для подтверждения регистрации')->warning();
+        return redirect()->route('login');
+    }
+
+    protected function guard()
+    {
+        return \Auth::guard();
+    }
+
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
+        $user = User::register($data['name'],$data['email'],$data['password']);
+        \Mail::to($user->email)->send(new VerifyMail($user));
+        return $user;
+    }
+
+    public function verify($token)
+    {
+        if(!$user = User::where('verify_token',$token)->first()){
+            flash('Не верный код подтверждения.')->error();
+            return redirect('login');
+        }
+        try{
+            $this->registerService->verify($user->id);
+            flash('Ваша почта успешно подтверждена. Введите регистрационные данные и войдите на сайт')->success();
+        }catch (\DomainException $ex){
+            flash($ex->getMessage())->error();
+        }
+        return redirect('login');
     }
 }

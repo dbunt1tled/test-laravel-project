@@ -7,6 +7,27 @@
  */
 
 use DaveJamesMiller\Breadcrumbs\BreadcrumbsGenerator;
+use App\Entity\User;
+
+Breadcrumbs::register('admin.home', function (BreadcrumbsGenerator $bread){
+    $bread->push('Админ. панель', route('admin.home'));
+});
+Breadcrumbs::register('admin.users.index', function (BreadcrumbsGenerator $bread){
+    $bread->parent('admin.home');
+    $bread->push('Пользователи', route('admin.users.index'));
+});
+Breadcrumbs::register('admin.users.create', function (BreadcrumbsGenerator $bread){
+    $bread->parent('admin.users.index');
+    $bread->push('Создать пользователя', route('admin.users.create'));
+});
+Breadcrumbs::register('admin.users.edit', function (BreadcrumbsGenerator $bread, User $user){
+    $bread->parent('admin.users.index');
+    $bread->push('Редактировать пользователя: '.$user->name, route('admin.users.edit',$user));
+});
+Breadcrumbs::register('admin.users.show', function (BreadcrumbsGenerator $bread, User $user){
+    $bread->parent('admin.users.index');
+    $bread->push('Данные пользователя: '.$user->name, route('admin.users.show',$user));
+});
 
 Breadcrumbs::register('home', function (BreadcrumbsGenerator $bread){
     $bread->push('Adverts', route('home'));
