@@ -9,6 +9,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class RegisterTest extends TestCase
 {
+    //automatically rollback db data changed
     use DatabaseTransactions;
 
     public function testRequest()
@@ -38,8 +39,10 @@ class RegisterTest extends TestCase
 
         self::assertFalse($user->isActive());
         self::assertTrue($user->isWait());
-
-        $user->delete();
+        self::assertFalse($user->isAdmin());
+        self::assertFalse($user->isModerator());
+        //Trait DatabaseTransactions automatically rollback
+        //$user->delete();
     }
 
     public function testVerify()
@@ -54,9 +57,9 @@ class RegisterTest extends TestCase
         //$user->delete();
         try{
             $user->verify();
-        }catch (\DomainException $ex){
+        }catch (\Exception $ex){
             self::assertEquals('Ваша почта уже подтверждена.',$ex->getMessage());
         }
-        $user->delete();
+        //$user->delete();
     }
 }

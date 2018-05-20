@@ -32,6 +32,7 @@ class UpdateRequest extends FormRequest
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,id,' . $this->user->id,
             'status' => ['required','string',Rule::in(array_keys(User::getStatuses()))],
+            'role' => ['required','string',Rule::in(array_keys(User::rolesList()))],
             'password' => 'sometimes|nullable|min:6',
         ];
     }

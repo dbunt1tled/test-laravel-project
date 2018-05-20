@@ -2,11 +2,13 @@
 @section('content')
     @include('admin.users._nv')
     <div class="d-flex flex-row mb-3">
-        <form method="POST" action="{{route('admin.users.destroy',$user)}}" class="mr-1">
-            @csrf
-            @method('DELETE')
-            <button class="btn btn-danger">Удалить</button>
-        </form>
+        @can('users.manage')
+            <form method="POST" action="{{route('admin.users.destroy',$user)}}" class="mr-1">
+                @csrf
+                @method('DELETE')
+                <button class="btn btn-danger">Удалить</button>
+            </form>
+        @endif
         @if(!$user->isActive())
             <form method="POST" action="{{route('admin.users.verify',$user)}}" class="mr-1">
                 @csrf
@@ -38,7 +40,6 @@
                                 <span class="invalid-feedback"><strong>{{$errors->first('email')}}</strong></span>
                             @endif
                         </div>
-
                         <div class="form-group">
                             <label for="status" class="col-form-label">Статус</label>
                             @if(is_array($statuses) && count($statuses))
@@ -49,7 +50,16 @@
                                 </select>
                             @endif
                         </div>
-
+                        <div class="form-group">
+                            <label for="role" class="col-form-label">Статус</label>
+                            @if(is_array($roles) && count($roles))
+                                <select name="role" id="role"  class="form-control{{$errors->has('role')?' is-invalid':''}}">
+                                    @foreach($roles as $value => $data)
+                                        <option value="{{$value}}"  @if($value == old('role',$user->role)) selected @endif  >{{$data['text']}}</option>
+                                    @endforeach
+                                </select>
+                            @endif
+                        </div>
                         <div class="form-group">
                             <label for="password" class="col-form-label">Пароль</label>
                             <input type="password" name="password" id="password" value="{{old('password')}}" class="form-control{{$errors->has('password')?' is-invalid':''}}" />

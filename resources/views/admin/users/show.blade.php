@@ -32,6 +32,7 @@
                             <tr><td>Имя</td> <td><a href="{{route('admin.users.edit',$user)}}">{{$user->name}}</a></td></tr>
                             <tr><td>Email</td><td>{{$user->email}}</td></tr>
                             <tr><td>Статус</td><td><span class="badge badge-{{$statuses[$user->status]['class']}}">{{$statuses[$user->status]['text']}}</span></td></tr>
+                            <tr><td>Роль</td><td><span class="badge badge-{{$roles[$user->role]['class']}}">{{$roles[$user->role]['text']}}</span></td></tr>
                         </tbody>
                     </table>
                 </div>

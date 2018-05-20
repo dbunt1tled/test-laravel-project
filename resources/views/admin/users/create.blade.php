@@ -35,6 +35,26 @@
                         </div>
 
                         <div class="form-group">
+                            <label for="status" class="col-form-label">Статус</label>
+                            @if(is_array($statuses) && count($statuses))
+                                <select name="status" id="status"  class="form-control{{$errors->has('status')?' is-invalid':''}}">
+                                    @foreach($statuses as $value => $data)
+                                        <option value="{{$value}}"  @if($value == old('status',\App\Entity\User::STATUS_ACTIVE)) selected @endif  >{{$data['text']}}</option>
+                                    @endforeach
+                                </select>
+                            @endif
+                        </div>
+                        <div class="form-group">
+                            <label for="role" class="col-form-label">Статус</label>
+                            @if(is_array($roles) && count($roles))
+                                <select name="role" id="role"  class="form-control{{$errors->has('role')?' is-invalid':''}}">
+                                    @foreach($roles as $value => $data)
+                                        <option value="{{$value}}"  @if($value == old('role',\App\Entity\User::ROLE_USER)) selected @endif  >{{$data['text']}}</option>
+                                    @endforeach
+                                </select>
+                            @endif
+                        </div>
+                        <div class="form-group">
                             <button type="submit" class="btn btn-primary">Сохранить</button>
                         </div>
                     </form>
