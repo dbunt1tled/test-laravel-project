@@ -11,7 +11,6 @@ use Illuminate\Support\Str;
  * Class User
  *
  * @package App\Entity
- *
  * @property int $id
  * @property string $name
  * @property string $email
@@ -22,7 +21,18 @@ use Illuminate\Support\Str;
  * @property int $status
  * @property string $role
  * @property string $verify_token
- *
+ * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
+ * @mixin \Eloquent
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User whereEmail($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User wherePassword($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User whereRememberToken($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User whereRole($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User whereVerifyToken($value)
  */
 class User extends Authenticatable
 {

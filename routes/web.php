@@ -27,6 +27,17 @@ Route::group(
         Route::get('/', 'HomeController@index')->name('home');
         Route::post('/users/{user}/verify', 'UsersController@verify')->name('users.verify');
         Route::resource('users', 'UsersController');
+        Route::resource('region', 'RegionController');
+        Route::group(['prefix' => 'adverts', 'as' => 'adverts.', 'namespace' => 'Adverts'], function () {
+            Route::resource('category', 'CategoryController');
+            Route::group(['prefix' => 'category/{category}', 'as' => 'category.'], function () {
+                Route::post('/first', 'CategoryController@first')->name('first');
+                Route::post('/up', 'CategoryController@up')->name('up');
+                Route::post('/down', 'CategoryController@down')->name('down');
+                Route::post('/last', 'CategoryController@last')->name('last');
+                Route::resource('attribute', 'AttributeController')->except('index');
+            });
+        });
 
     }
 );
