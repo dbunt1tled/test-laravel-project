@@ -52,7 +52,7 @@ class UsersController extends Controller
 
     public function store(CreateRequest $request)
     {
-        $user = User::new($request['name'],$request['email'],$request['status'],$request['password'],$request['role']);
+        $user = User::new($request['name'],$request['email'],$request['last_name'],$request['phone'],$request['status'],$request['password'],$request['role']);
         $user->save();
         return redirect()->route('admin.users.show',$user);
     }
@@ -77,7 +77,7 @@ class UsersController extends Controller
 
     public function update(UpdateRequest $request, User $user)
     {
-        $user->edit($request['name'],$request['email'],$request['status'],$request['password'],$request['role']);
+        $user->edit($request['name'],$request['last_name'],$request['phone'],$request['email'],$request['status'],$request['password'],$request['role']);
         $user->save();
         return redirect()->route('admin.users.show',$user);
     }

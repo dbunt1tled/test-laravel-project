@@ -30,7 +30,9 @@ class UpdateRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,id,' . $this->user->id,
+            'phone' => 'required|string|max:255|regex:/^\d+$/s|unique:users,id,' . $this->user->id,
             'status' => ['required','string',Rule::in(array_keys(User::getStatuses()))],
             'role' => ['required','string',Rule::in(array_keys(User::rolesList()))],
             'password' => 'sometimes|nullable|min:6',

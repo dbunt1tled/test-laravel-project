@@ -32,12 +32,25 @@
                                 <span class="invalid-feedback"><strong>{{$errors->first('name')}}</strong></span>
                             @endif
                         </div>
-
+                        <div class="form-group">
+                            <label for="last_name" class="col-form-label">Фамилия</label>
+                            <input type="text" name="last_name" id="last_name" value="{{old('last_name',$user->last_name)}}" class="form-control{{$errors->has('last_name')?' is-invalid':''}}" required />
+                            @if($errors->has('last_name'))
+                                <span class="invalid-feedback"><strong>{{$errors->first('last_name')}}</strong></span>
+                            @endif
+                        </div>
                         <div class="form-group">
                             <label for="email" class="col-form-label">Email</label>
                             <input type="text" name="email" id="email" value="{{old('email',$user->email)}}" class="form-control{{$errors->has('email')?' is-invalid':''}}" required />
                             @if($errors->has('email'))
                                 <span class="invalid-feedback"><strong>{{$errors->first('email')}}</strong></span>
+                            @endif
+                        </div>
+                        <div class="form-group">
+                            <label for="phone" class="col-form-label">Телефон</label>
+                            <input type="text" name="phone" id="phone" value="{{old('name',$user->phone)}}" class="form-control{{$errors->has('phone')?' is-invalid':''}}" required />
+                            @if($errors->has('phone'))
+                                <span class="invalid-feedback"><strong>{{$errors->first('phone')}}</strong></span>
                             @endif
                         </div>
                         <div class="form-group">

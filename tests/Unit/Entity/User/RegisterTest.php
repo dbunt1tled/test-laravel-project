@@ -51,15 +51,15 @@ class RegisterTest extends TestCase
         $user = User::register($testUserData->name,$testUserData->email, 'secret');
         $user->verify();
 
-        //$this->expectExceptionMessage('Ваша почта уже подтверждена.');
-        //$user->verify();
+        $this->expectExceptionMessage('Ваша почта уже подтверждена.');
+        $user->verify();
         // //If exception this row not execute
         //$user->delete();
-        try{
+        /*try{
             $user->verify();
         }catch (\Exception $ex){
             self::assertEquals('Ваша почта уже подтверждена.',$ex->getMessage());
-        }
+        }/**/
         //$user->delete();
     }
 }

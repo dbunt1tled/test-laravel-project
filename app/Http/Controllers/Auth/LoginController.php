@@ -2,24 +2,26 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Entity\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
-use App\Entity\User;
+use App\Services\Sms\SmsSender;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
-use Illuminate\Validation\ValidationException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class LoginController extends Controller
 {
-
     use ThrottlesLogins;
 
+    private $sms;
 
-    protected $redirectTo = '/cabinet';
-
-    public function __construct()
+    public function __construct(SmsSender $sms)
     {
         $this->middleware('guest')->except('logout');
+        $this->sms = $sms;
     }
 
     public function showLoginForm()
@@ -29,79 +31,88 @@ class LoginController extends Controller
 
     public function login(LoginRequest $request)
     {
-
-        // If the class is using the ThrottlesLogins trait, we can automatically throttle
-        // the login attempts for this application. We'll key this by the username and
-        // the IP address of the client making these requests into this application.
         if ($this->hasTooManyLoginAttempts($request)) {
             $this->fireLockoutEvent($request);
-
-            return $this->sendLockoutResponse($request);
+            $this->sendLockoutResponse($request);
         }
 
-        if ($this->attemptLogin($request)) {
-            return $this->sendLoginResponse($request);
+        $authenticate = Auth::attempt(
+            $request->only(['email', 'password']),
+            $request->filled('remember')
+        );
+
+        if ($authenticate) {
+            $request->session()->regenerate();
+            $this->clearLoginAttempts($request);
+            $user = Auth::user();
+            if ($user->isWait()) {
+                Auth::logout();
+                flash('Акаунт не подтвержден или доступ ограничен.')->error();
+                return redirect()->guest('/login');
+            }
+            if ($user->isPhoneAuthEnabled()) {
+                Auth::logout();
+                $token = (string)random_int(10000, 99999);
+                $request->session()->put('auth', [
+                    'id' => $user->id,
+                    'token' => $token,
+                    'remember' => $request->filled('remember'),
+                ]);
+                $this->sms->send($user->phone, 'Проверочный код для входа: ' . $token);
+                return redirect()->route('login.phone');
+            }
+            return redirect()->route('cabinet.home');
         }
 
-        // If the login attempt was unsuccessful we will increment the number of attempts
-        // to login and redirect the user back to the login form. Of course, when this
-        // user surpasses their maximum number of attempts they will get locked out.
         $this->incrementLoginAttempts($request);
 
-        return $this->sendFailedLoginResponse($request);
+        throw ValidationException::withMessages(['email' => [trans('auth.failed')]]);
     }
 
-    public function username()
+    public function phone()
     {
-            return 'email';
+        return view('auth.phone');
     }
 
-    protected function credentials(Request $request)
+    public function verify(Request $request)
     {
-        return $request->only('email', 'password');
-    }
-    protected function sendLoginResponse(LoginRequest $request)
-    {
-        $request->session()->regenerate();
-
-        $this->clearLoginAttempts($request);
-
-        if($this->guard()->user()->status !== User::STATUS_ACTIVE){
-            $this->guard()->logout();
-            flash('Акаунт не подтвержден или доступ ограничен.')->error();
-            return back();
+        if ($this->hasTooManyLoginAttempts($request)) {
+            $this->fireLockoutEvent($request);
+            $this->sendLockoutResponse($request);
         }
-        //это означает что редиректим на страницу указанную в переменной $redirectTo
-        return redirect()->intended($this->redirectTo);
-    }
-    protected function sendFailedLoginResponse(Request $request)
-    {
 
-        throw ValidationException::withMessages([
-            'email' => [trans('auth.failed')],
+        $this->validate($request, [
+            'token' => 'required|string',
         ]);
+
+        if (!$session = $request->session()->get('auth')) {
+            throw new BadRequestHttpException('Код подтверждения не найден.');
+        }
+
+        /** @var User $user */
+        $user = User::findOrFail($session['id']);
+
+        if ($request['token'] === $session['token']) {
+            $request->session()->flush();
+            $this->clearLoginAttempts($request);
+            Auth::login($user, $session['remember']);
+            return redirect()->intended(route('cabinet.home'));
+        }
+
+        $this->incrementLoginAttempts($request);
+
+        throw ValidationException::withMessages(['token' => ['Не верный код аутентификации.']]);
     }
 
     public function logout(Request $request)
     {
-        $this->guard()->logout();
-
+        Auth::guard()->logout();
         $request->session()->invalidate();
-
-        return redirect('/');
+        return redirect()->route('home');
     }
 
-
-    protected function guard()
+    protected function username()
     {
-        return \Auth::guard();
+        return 'email';
     }
-
-    protected function attemptLogin(Request $request)
-    {
-        return $this->guard()->attempt(
-            $this->credentials($request), $request->filled('remember')
-        );
-    }
-
 }

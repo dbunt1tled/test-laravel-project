@@ -110,7 +110,28 @@ Breadcrumbs::register('password.email', function (BreadcrumbsGenerator $bread){
     $bread->parent('passwordChange');
     $bread->push('Изменить пароль', route('password.email'));
 });
-Breadcrumbs::register('cabinet', function (BreadcrumbsGenerator $bread){
+Breadcrumbs::register('cabinet.home', function (BreadcrumbsGenerator $bread){
     $bread->parent('home');
-    $bread->push('Изменить пароль', route('cabinet'));
+    $bread->push('Управление', route('cabinet.home'));
+});
+Breadcrumbs::register('cabinet.profile.home', function (BreadcrumbsGenerator $bread){
+    $bread->parent('cabinet.home');
+    $bread->push('Профиль', route('cabinet.profile.home'));
+});
+Breadcrumbs::register('cabinet.profile.edit', function (BreadcrumbsGenerator $bread){
+    $bread->parent('cabinet.profile.home');
+    $bread->push('Просмотр личных данных', route('cabinet.profile.edit'));
+});
+Breadcrumbs::register('cabinet.profile.phone', function (BreadcrumbsGenerator $bread){
+    $bread->parent('cabinet.profile.edit');
+    $bread->push('Проверка телефона', route('cabinet.profile.phone'));
+});
+Breadcrumbs::register('login.phone', function (BreadcrumbsGenerator $bread){
+    $bread->parent('login');
+    $bread->push('Проверочный код', route('login.phone'));
+});
+
+Breadcrumbs::register('cabinet.adverts.index', function (BreadcrumbsGenerator $bread){
+    $bread->parent('cabinet.home');
+    $bread->push('Объявления', route('cabinet.adverts.index'));
 });

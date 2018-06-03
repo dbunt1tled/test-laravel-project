@@ -19,10 +19,26 @@
                         </div>
 
                         <div class="form-group">
+                            <label for="last_name" class="col-form-label">Фамилия</label>
+                            <input type="text" id="last_name" name="last_name" value="{{old('last_name')}}" class="form-control{{$errors->has('last_name')?' is-invalid':''}}" required />
+                            @if($errors->has('last_name'))
+                                <span class="invalid-feedback"><strong>{{$errors->first('last_name')}}</strong></span>
+                            @endif
+                        </div>
+
+                        <div class="form-group">
                             <label for="email" class="col-form-label">Email</label>
                             <input type="text" id="email" name="email" value="{{old('email')}}" class="form-control{{$errors->has('email')?' is-invalid':''}}" required />
                             @if($errors->has('email'))
                                 <span class="invalid-feedback"><strong>{{$errors->first('email')}}</strong></span>
+                            @endif
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone" class="col-form-label">Телефон</label>
+                            <input type="text" id="phone" name="phone" value="{{old('phone')}}" class="form-control{{$errors->has('phone')?' is-invalid':''}}" required />
+                            @if($errors->has('phone'))
+                                <span class="invalid-feedback"><strong>{{$errors->first('phone')}}</strong></span>
                             @endif
                         </div>
 

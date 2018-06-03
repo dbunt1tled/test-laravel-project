@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
@@ -13,14 +14,20 @@ use Illuminate\Support\Str;
  * @package App\Entity
  * @property int $id
  * @property string $name
+ * @property string $last_name
  * @property string $email
  * @property string $password
  * @property string $remember_token
- * @property string $created_at
- * @property string $updated_at
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
  * @property int $status
+ * @property boolean $phone_auth
  * @property string $role
  * @property string $verify_token
+ * @property string $phone_verify_token
+ * @property boolean $phone_verified
+ * @property Carbon $phone_verify_token_expire
+ * @property string $phone
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
  * @mixin \Eloquent
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User whereCreatedAt($value)
@@ -32,7 +39,9 @@ use Illuminate\Support\Str;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User whereRole($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User whereStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User whereLast_name($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User whereVerifyToken($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User wherePhone($value)
  */
 class User extends Authenticatable
 {
@@ -51,7 +60,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'verify_token', 'status', 'role',
+        'name', 'email', 'password', 'verify_token', 'status', 'role', 'last_name','phone'
     ];
 
     /**
@@ -61,6 +70,14 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password', 'remember_token',
+    ];
+
+    protected $casts = [
+        'phone_verified' => 'boolean',
+        'phone_verify_token_expire' => 'datetime',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+        'phone_auth' => 'boolean',
     ];
 
     public static function getStatuses()
@@ -107,7 +124,7 @@ class User extends Authenticatable
 
     public static function register($name, $email, $password): self
     {
-        $user = static::new($name,$email,null,$password);
+        $user = static::new($name,$email,null,null,null,$password);
         $user->save();
         return $user;
     }
@@ -122,8 +139,9 @@ class User extends Authenticatable
         return $this->role === self::ROLE_ADMIN;
     }
 
-    public static function new($name, $email, $status = null,$password = null, $role = null): self
+    public static function new($name, $email, $last_name = null, $phone = null, $status = null,$password = null, $role = null,$verifyPhone = false): self
     {
+        $verifyPhone = (!empty($phone) && $verifyPhone)?true:false;
         return static::create([
             'name' => $name,
             'email' => $email,
@@ -131,12 +149,21 @@ class User extends Authenticatable
             'status' => (!is_null($status) && (in_array($role,array_keys(User::getStatuses()))))?$status:self::STATUS_WAIT,
             'verify_token' => ($status === self::STATUS_ACTIVE)?'':Str::random(),
             'role' => (!is_null($role) && (in_array($role,array_keys(User::rolesList()))))?$role:self::ROLE_USER,
+            'last_name' => $last_name,
+            'phone' => $phone,
+            'phone_verified' => $verifyPhone,
         ]);
     }
-    public function edit($name = null, $email = null, $status = null,$password = null, $role = null)
+    public function edit($name = null, $last_name = null,$phone = null, $email = null, $status = null,$password = null, $role = null)
     {
         if(!empty($name)){
             $this->name = $name;
+        }
+        if(!empty($last_name)){
+            $this->last_name = $last_name;
+        }
+        if(!empty($phone)){
+            $this->phone = $phone;
         }
         if(!empty($email)){
             $this->email = $email;
@@ -173,5 +200,69 @@ class User extends Authenticatable
             throw new \DomainException('Данная роль уже присвоина пользователю.');
         }
         $this->update(['role' => $role]);
+    }
+
+    public function isPhoneVerified()
+    {
+        return $this->phone_verified;
+    }
+
+    public function requestPhoneVerification(Carbon $now)
+    {
+        if(empty($this->phone)){
+            throw new \DomainException('Номер телефона отсутствует.');
+        }
+        if(!empty($this->phone_verify_token) && $this->phone_verify_token_expire && $this->phone_verify_token_expire->gt($now) ){
+            throw new \DomainException('Проверочный код уже отправлен.');
+        }
+        $this->phone_verified = false;
+        $this->phone_verify_token = (string)random_int(10000,99999);
+        $this->phone_verify_token_expire = $now->copy()->addSeconds(300);
+        $this->saveOrFail();
+
+        return $this->phone_verify_token;
+    }
+    public function verifyPhone($token, Carbon $now)
+    {
+        if($token !== $this->phone_verify_token){
+            throw new \DomainException('Введен не правильный проверочный код');
+        }
+        if($this->phone_verify_token_expire->lt($now)){
+            throw new \DomainException('Вышел срок действия проверочного кода.');
+        }
+        $this->phone_verified = true;
+        $this->phone_verify_token = null;
+        $this->phone_verify_token_expire = null;
+        $this->saveOrFail();
+    }
+
+    public function unverifyPhone(): void
+    {
+        $this->phone_verified = false;
+        $this->phone_verify_token = null;
+        $this->phone_verify_token_expire = null;
+        $this->phone_auth = false;
+        $this->saveOrFail();
+    }
+    public function enablePhoneAuth(): void
+    {
+        if (!empty($this->phone) && !$this->isPhoneVerified()) {
+            throw new \DomainException('Phone number is empty.');
+        }
+        $this->phone_auth = true;
+        $this->saveOrFail();
+    }
+    public function disablePhoneAuth(): void
+    {
+        $this->phone_auth = false;
+        $this->saveOrFail();
+    }
+    public function isPhoneAuthEnabled(): bool
+    {
+        return (bool)$this->phone_auth;
+    }
+    public function hasFilledProfile(): bool
+    {
+        return !empty($this->name) && !empty($this->last_name) && $this->isPhoneVerified();
     }
 }
