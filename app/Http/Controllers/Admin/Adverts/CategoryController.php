@@ -8,6 +8,7 @@ use App\Http\Requests\Admin\Adverts\Category\UpdateRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Gate;
+use Illuminate\Support\Facades\Cache;
 
 class CategoryController extends Controller
 {
@@ -30,6 +31,7 @@ class CategoryController extends Controller
     {
         $category = Category::new($request['name'],$request['slug'],$request['parent']);
         $category->save();
+        Cache::tags(Category::class)->flush();
         return redirect()->route('admin.adverts.category.show',$category);
     }
 
@@ -79,6 +81,7 @@ class CategoryController extends Controller
     {
         $category->edit($request['name'],$request['slug'],$request['parent_id']);
         $category->save();
+        Cache::tags(Category::class)->flush();
         return redirect()->route('admin.adverts.category.show',$category);
     }
 

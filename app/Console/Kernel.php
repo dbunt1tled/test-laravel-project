@@ -24,8 +24,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+
+         $schedule->command('advert:expire')->daily();
     }
 
     /**
@@ -40,3 +40,4 @@ class Kernel extends ConsoleKernel
         require base_path('routes/console.php');
     }
 }
+// * * * * *    www-data    cd /var/www/doska.local/;/usr/bin/php artisan schedule:run

@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -19,6 +20,7 @@ use Illuminate\Database\Eloquent\Model;
  * @mixin \Illuminate\Database\Query\Builder
  * @property \Carbon\Carbon|null $created_at
  * @property \Carbon\Carbon|null $updated_at
+ * @method static Builder $roots()
  * @method static \Illuminate\Database\Eloquent\Builder|Region whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Region whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Region whereName($value)
@@ -68,5 +70,18 @@ class Region extends Model
         if(!is_null($parentId)){
             $this->parent_id = $parentId;
         }
+    }
+    public function getAddress()
+    {
+        return ($this->parent ? $this->parent->getAddress(): '') . $this->name;
+    }
+
+    public function scopeRoots(Builder $query)
+    {
+        return $query->where('parent_id',null);
+    }
+    public function getPath(): string
+    {
+        return ($this->parent ? $this->parent->getPath() . '/' : '') . $this->slug;
     }
 }

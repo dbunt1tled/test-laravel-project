@@ -8,6 +8,7 @@ use App\Http\Requests\Admin\Region\UpdateRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Gate;
+use Illuminate\Support\Facades\Cache;
 
 class RegionController extends Controller
 {
@@ -30,6 +31,7 @@ class RegionController extends Controller
     {
         $region = Region::new($request['name'],$request['slug'],$request['parent']);
         $region->save();
+        Cache::tags(Region::class)->flush();
         return redirect()->route('admin.region.show',$region);
     }
 
@@ -52,6 +54,7 @@ class RegionController extends Controller
     {
         $region->edit($request['name'],$request['slug'],$request['parent_id']);
         $region->save();
+        Cache::tags(Region::class)->flush();
         return redirect()->route('admin.region.show',$region);
     }
 

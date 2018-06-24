@@ -28,7 +28,9 @@ use Kalnoy\Nestedset\NodeTrait;
  * @property int $_lft
  * @property int $_rgt
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Adverts\Category whereLft($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Adverts\Category defaultOrder($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Adverts\Category whereRgt($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entity\Adverts\Attribute[] $attributes
  */
 class Category extends Model
 {

@@ -10,7 +10,7 @@ namespace App\UseCases\Auth;
 
 use App\Entity\User;
 use App\Http\Requests\Auth\RegisterRequest;
-use App\Mail\Auth\VerifyMail;
+use App\Mail\Auth\AdvertFavoritePrice;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Contracts\Mail\Mailer;
@@ -29,7 +29,7 @@ class RegisterService
     public function register(RegisterRequest $request)
     {
         $user = User::register($request['name'],$request['email'],$request['password']);
-        $this->mailer->to($user->email)->send(new VerifyMail($user));
+        $this->mailer->to($user->email)->send(new AdvertFavoritePrice($user));
         $this->dispatcher->dispatch(new Registered($user));
     }
 

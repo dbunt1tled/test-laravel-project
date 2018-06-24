@@ -86,5 +86,10 @@
 
 <!-- Scripts -->
 <script src="{{ mix('js/app.js','build') }}" defer></script>
+@section('scripts')
+    <script>
+        console.log('start');
+    </script>
+@show
 </body>
 </html>

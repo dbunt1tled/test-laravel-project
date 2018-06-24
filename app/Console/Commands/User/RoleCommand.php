@@ -19,7 +19,7 @@ class RoleCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Установить роль пользователю';
 
     /**
      * Create a new command instance.

@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Adverts\Advert\Advert;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Carbon;
@@ -42,6 +43,11 @@ use Illuminate\Support\Str;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User whereLast_name($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User whereVerifyToken($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User wherePhone($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User whereLastName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User wherePhoneAuth($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User wherePhoneVerified($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User wherePhoneVerifyToken($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User wherePhoneVerifyTokenExpire($value)
  */
 class User extends Authenticatable
 {
@@ -154,6 +160,10 @@ class User extends Authenticatable
             'phone_verified' => $verifyPhone,
         ]);
     }
+    public function favorites()
+    {
+        return $this->belongsToMany(Advert::class, 'advert_favorites', 'user_id', 'advert_id');
+    }
     public function edit($name = null, $last_name = null,$phone = null, $email = null, $status = null,$password = null, $role = null)
     {
         if(!empty($name)){
@@ -188,6 +198,23 @@ class User extends Authenticatable
             'status' => self::STATUS_ACTIVE,
             'verify_token' => null,
         ]);
+    }
+    public function addToFavorites($id): void
+    {
+        if ($this->hasInFavorites($id)) {
+            throw new \DomainException('This advert is already added to favorites.');
+        }
+        $this->favorites()->attach($id);
+    }
+
+    public function removeFromFavorites($id): void
+    {
+        $this->favorites()->detach($id);
+    }
+
+    public function hasInFavorites($id): bool
+    {
+        return $this->favorites()->where('id', $id)->exists();
     }
     public function changeRole($role)
     {

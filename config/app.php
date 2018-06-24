@@ -161,6 +161,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         Laracasts\Flash\FlashServiceProvider::class,
         \App\Providers\SmsServiceProvider::class,
+        \App\Providers\CacheServiceProvider::class,
     ],
 
     /*
