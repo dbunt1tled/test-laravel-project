@@ -9,16 +9,7 @@
 namespace App\UseCases\Adverts;
 
 use App\Entity\Adverts\Advert\Advert;
-use App\Entity\Adverts\Category;
-use App\Entity\Region;
 use App\Entity\User;
-use App\Http\Requests\Adverts\AttributesRequest;
-use App\Http\Requests\Adverts\CreateRequest;
-use App\Http\Requests\Adverts\EditRequest;
-use App\Http\Requests\Adverts\PhotosRequest;
-use App\Http\Requests\Adverts\RejectRequest;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\DB;
 
 class FavoriteService
 {

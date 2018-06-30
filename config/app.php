@@ -146,7 +146,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-
+        Illuminate\Notifications\NotificationServiceProvider::class,
         /*
          * Package Service Providers...
          */
@@ -160,8 +160,9 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Laracasts\Flash\FlashServiceProvider::class,
-        \App\Providers\SmsServiceProvider::class,
-        \App\Providers\CacheServiceProvider::class,
+        App\Providers\SmsServiceProvider::class,
+        App\Providers\CacheServiceProvider::class,
+        App\Providers\SearchServiceProvider::class,
     ],
 
     /*

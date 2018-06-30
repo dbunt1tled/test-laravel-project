@@ -104,7 +104,7 @@
                 </tbody>
             </table>
 
-            <p>Address: {{ $advert->address }}</p>
+            <p>Адрес: {{ $advert->address }}</p>
 
             <div style="margin: 20px 0; border: 1px solid #ddd">
                 <div id="map" style="width: 100%; height: 250px"></div>

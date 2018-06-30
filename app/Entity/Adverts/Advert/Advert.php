@@ -24,8 +24,8 @@ use Illuminate\Support\Carbon;
  * @property string|null $reject_reason
  * @property \Carbon\Carbon|null $created_at
  * @property \Carbon\Carbon|null $updated_at
- * @property string|null $published_at
- * @property string|null $expires_at
+ * @property \Carbon\Carbon|null $published_at
+ * @property \Carbon\Carbon|null $expires_at
  * @method static \Illuminate\Database\Eloquent\Builder|Advert whereAddress($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Advert whereCategoryId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Advert whereContent($value)
