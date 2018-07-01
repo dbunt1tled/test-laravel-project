@@ -12,6 +12,7 @@
                         <li class="nav-item"><a class="nav-link active" href="{{ route('cabinet.home') }}">Управление</a></li>
                         <li class="nav-item"><a class="nav-link active" href="{{ route('cabinet.adverts.index') }}">Объявления</a></li>
                         <li class="nav-item"><a class="nav-link active" href="{{ route('cabinet.favorites.index') }}">Избранное</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="{{ route('cabinet.banners.index') }}">Баннеры</a></li>
                         <li class="nav-item"><a class="nav-link active" href="{{ route('cabinet.profile.home') }}">Профиль</a></li>
                     </ul>
 

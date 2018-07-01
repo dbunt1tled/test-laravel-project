@@ -23,7 +23,52 @@ class InitCommand extends Command
         $this->client = $client;
     }
 
-    public function handle(): bool
+    public function handle()
+    {
+        $this->initAdverts();
+        $this->initBanners();
+    }
+
+    public function initBanners():bool
+    {
+        try {
+            $this->client->indices()->delete([
+                'index' => 'banners',
+            ]);
+        } catch (Missing404Exception $e) {}
+
+        $this->client->indices()->create([
+            'index' => 'banners',
+            'body' => [
+                'mappings' => [
+                    'banner' => [
+                        '_source' => [
+                            'enabled' => true,
+                        ],
+                        'properties' => [
+                            'id' => [
+                                'type' => 'integer',
+                            ],
+                            'status' => [
+                                'type' => 'keyword',
+                            ],
+                            'format' => [
+                                'type' => 'keyword',
+                            ],
+                            'categories' => [
+                                'type' => 'integer',
+                            ],
+                            'regions' => [
+                                'type' => 'integer',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+        return true;
+    }
+    public function initAdverts(): bool
     {
         try {
             $this->client->indices()->delete([

@@ -15,11 +15,6 @@ class HomeController extends Controller
 
     public function index()
     {
-
-        $client->indices()->create([
-
-        ]);
-
         return view('admin.index');
     }
 }

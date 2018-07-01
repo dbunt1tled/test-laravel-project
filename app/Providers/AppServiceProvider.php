@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Entity\Adverts\Category;
 use App\Entity\Region;
+use App\Services\Banner\CostCalculator;
 use App\Services\Sms\ArraySender;
 use App\Services\Sms\SmsRu;
 use App\Services\Sms\SmsSender;
@@ -31,6 +32,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->singleton(CostCalculator::class, function (Application $app) {
+            $config = $app->make('config')->get('banner');
+            return new CostCalculator($config['price']);
+        });
+
     }
 }

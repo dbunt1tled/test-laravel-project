@@ -35862,7 +35862,6 @@ module.exports = function(module) {
 /***/ "./resources/assets/js/app.js":
 /***/ (function(module, exports, __webpack_require__) {
 
-
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -35904,6 +35903,31 @@ $('.region-selector').each(function () {
    buildSelect(null,selected);
 });
 /**/
+$(document).on('click', '.phone-button', function () {
+    var button = $(this);
+    axios.post(button.data('source')).then(function (response) {
+        button.find('.number').html(response.data);
+    }).catch(function (reason) {
+        console.log(reason);
+    });
+});
+
+$('.banner').each(function () {
+    var block = $(this);
+    var url = block.attr('data-url');
+    var format = block.attr('data-format');
+    var category = block.attr('data-category');
+    var region = block.attr('data-region');
+    axios.get(url, { params: {
+            format: format,
+            category: category,
+            region: region
+        } }).then(function (response) {
+        block.html(response.data);
+    }).catch(function (error) {
+        console.error(error);
+    });
+});
 
 /***/ }),
 

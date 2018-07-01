@@ -13,6 +13,7 @@ use App\Entity\Adverts\Category;
 use App\Entity\Adverts\Attribute;
 use App\Http\Router\AdvertsPath;
 use App\Http\Router\PagePath;
+use App\Entity\Banner\Banner;
 use App\Entity\Adverts\Advert\Advert;
 
 Breadcrumbs::register('admin.home', function (BreadcrumbsGenerator $bread){
@@ -93,6 +94,37 @@ Breadcrumbs::register('admin.adverts.category.show', function (BreadcrumbsGenera
         $bread->parent('admin.adverts.category.index');
     }
     $bread->push($category->name, route('admin.adverts.category.show',$category));
+});
+
+// Banners
+Breadcrumbs::register('admin.banners.index', function (BreadcrumbsGenerator $bread) {
+    $bread->parent('admin.home');
+    $bread->push('Banners', route('admin.banners.index'));
+});
+Breadcrumbs::register('admin.banners.show', function (BreadcrumbsGenerator $bread, Banner $banner) {
+    $bread->parent('admin.banners.index');
+    $bread->push($banner->name, route('admin.banners.show', $banner));
+});
+Breadcrumbs::register('admin.banners.edit', function (BreadcrumbsGenerator $bread, Banner $banner) {
+    $bread->parent('admin.banners.show', $banner);
+    $bread->push('Edit', route('admin.banners.edit', $banner));
+});
+Breadcrumbs::register('admin.banners.reject', function (BreadcrumbsGenerator $bread, Banner $banner) {
+    $bread->parent('admin.banners.show', $banner);
+    $bread->push('Reject', route('admin.banners.reject', $banner));
+});
+// Tickets
+Breadcrumbs::register('admin.tickets.index', function (BreadcrumbsGenerator $bread) {
+    $bread->parent('admin.home');
+    $bread->push('Tickets', route('admin.tickets.index'));
+});
+Breadcrumbs::register('admin.tickets.show', function (BreadcrumbsGenerator $bread, Ticket $ticket) {
+    $bread->parent('admin.tickets.index');
+    $bread->push($ticket->subject, route('admin.tickets.show', $ticket));
+});
+Breadcrumbs::register('admin.tickets.edit', function (BreadcrumbsGenerator $bread, Ticket $ticket) {
+    $bread->parent('admin.tickets.show', $ticket);
+    $bread->push('Edit', route('admin.tickets.edit', $ticket));
 });
 
 

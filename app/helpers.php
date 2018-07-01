@@ -9,7 +9,7 @@ if (! function_exists('adverts_path')) {
                     ->withCategory($category);
     }
 }
-/*
+
 if (! function_exists('page_path')) {
     function page_path(Page $page)
     {
@@ -17,4 +17,3 @@ if (! function_exists('page_path')) {
                     ->withPage($page);
     }
 }
-/**/
