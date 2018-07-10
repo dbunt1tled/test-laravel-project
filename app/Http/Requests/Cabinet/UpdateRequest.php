@@ -7,13 +7,14 @@ use Illuminate\Support\Facades\Auth;
 
 class UpdateRequest extends FormRequest
 {
+  /*
   protected $user;
   public function __construct(array $query = [], array $request = [], array $attributes = [], array $cookies = [], array $files = [], array $server = [], $content = null)
   {
       parent::__construct($query, $request, $attributes, $cookies, $files, $server, $content);
       $this->user = Auth::user();
   }
-
+  /**/
     public function authorize()
     {
         return true;
@@ -30,7 +31,8 @@ class UpdateRequest extends FormRequest
             'name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             /*'email' => 'required|string|email|max:255|unique:users,id,' . $this->user->id,/**/
-            'phone' => 'required|string|max:255|regex:/^\d+$/s|unique:users,id,' . $this->user->id,
+            /*'phone' => 'required|string|max:255|regex:/^\d+$/s|unique:users,id,' . $this->user->id,/**/
+            'phone' => 'required|string|max:255|regex:/^\d+$/s',
         ];
     }
 }

@@ -4,9 +4,16 @@ namespace App\Http\Controllers\Cabinet;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Cabinet\UpdateRequest;
+use App\UseCases\Profile\ProfileService;
 
 class ProfileController extends Controller
 {
+    private $service;
+
+    public function __construct(ProfileService $service)
+    {
+        $this->service = $service;
+    }
 
     public function index()
     {
@@ -20,13 +27,12 @@ class ProfileController extends Controller
     }
     public function update(UpdateRequest $request)
     {
-        $user = \Auth::user();
-        $oldPhone = $user->phone;
-        $user->edit($request->name,$request->last_name,$request->phone);
-        $user->save();
-        if($user->phone !== $oldPhone){
-            $user->unverifyPhone();
+        try{
+            $this->service->edit($request->user()->id,$request);
+        }catch (\DomainException $e) {
+            return redirect()->back()->with('error','Пользователь не найден');
         }
+
         return redirect()->route('cabinet.profile.home');
     }
     public function phone()

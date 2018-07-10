@@ -29,7 +29,7 @@ class RegisterService
     public function register(RegisterRequest $request)
     {
         $user = User::register($request['name'],$request['email'],$request['password']);
-        $this->mailer->to($user->email)->send(new AdvertFavoritePrice($user));
+        //$this->mailer->to($user->email)->send(new AdvertFavoritePrice($user));
         $this->dispatcher->dispatch(new Registered($user));
     }
 

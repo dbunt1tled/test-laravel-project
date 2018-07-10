@@ -1,0 +1,52 @@
+<RestClientRequest>
+  <option name="biscuits">
+    <list>
+      <Biscuit>
+        <option name="date" value="1531230464000" />
+        <option name="domain" value="doska.local" />
+        <option name="name" value="XSRF-TOKEN" />
+        <option name="path" value="/" />
+        <option name="value" value="eyJpdiI6Ik9YQlhiNjVOK0VNSmo3ZElBRVF0TWc9PSIsInZhbHVlIjoiUmZhVjVIV3ZBN2NMTGtIeFV4am9VY2tvOXZ0YldVVDdjcGNYbkVQZW5ITEtxM3lIZFwveFloZ1EyY2Z3ZVF4bkJ5YmpsbW5mWHlKMDh2aFhIZGxMeVNBPT0iLCJtYWMiOiI5MzMzNjhhNDg2OTczNzU4OTk3ZDlkNDYwZjk1YmYyZTFmMTk5OTZlMmM4MmU5ZjhkOGJkOWNmNzBjZjM3MjM3In0%3D" />
+      </Biscuit>
+      <Biscuit>
+        <option name="date" value="1531230464000" />
+        <option name="domain" value="doska.local" />
+        <option name="name" value="adverts_session" />
+        <option name="path" value="/" />
+        <option name="value" value="eyJpdiI6Imd5UDVqU0JKdlFcL2w0cGFqVU1KQ1BBPT0iLCJ2YWx1ZSI6IllIeFBkRU96M3h1Zlg0T2NXSG9NZUlRY2tlWFhhQUw1NFE5SlZHRGtPM1FlT1pTbGN0YXViSFdRN1luQjRldTJVZDN2ZldTOUZBVnZnMnFnOTFOend3PT0iLCJtYWMiOiIzYWY1MDA5NGNmMjY2NWU3MTZkODkxN2MwNmIwYTk3YjdlNTQwZGZjNzJhY2QwYzhiNDdhMDQzZGRiNzQxZmQ3In0%3D" />
+      </Biscuit>
+    </list>
+  </option>
+  <option name="httpMethod" value="GET" />
+  <option name="urlBase" value="http://doska.local" />
+  <option name="urlPath" value="/api/user" />
+  <option name="headers">
+    <list>
+      <KeyValuePair>
+        <option name="key" value="Accept" />
+        <option name="value" value="application/json" />
+      </KeyValuePair>
+      <KeyValuePair>
+        <option name="key" value="Cache-Control" />
+        <option name="value" value="no-cache" />
+      </KeyValuePair>
+      <KeyValuePair>
+        <option name="key" value="Content-Type" />
+        <option name="value" value="application/json" />
+      </KeyValuePair>
+      <KeyValuePair>
+        <option name="key" value="Authorization" />
+        <option name="value" value="Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjRlNWVmYzczZTlmNjc3M2UyMTNhNDFlODJmMjNkOTA5ZGU4MTA3NDExODg1YWU3YTQwMDdmZGM5ZGQwMDhlOTFmYmY0MzEwMjVhZTkzYTJiIn0.eyJhdWQiOiIzIiwianRpIjoiNGU1ZWZjNzNlOWY2NzczZTIxM2E0MWU4MmYyM2Q5MDlkZTgxMDc0MTE4ODVhZTdhNDAwN2ZkYzlkZDAwOGU5MWZiZjQzMTAyNWFlOTNhMmIiLCJpYXQiOjE1MzEyNDc4NzMsIm5iZiI6MTUzMTI0Nzg3MywiZXhwIjoxNTMyNTQzODczLCJzdWIiOiI5Iiwic2NvcGVzIjpbIioiXX0.r6C9HMQKXIVDj1bkkURIdUTuTg9TypVcELU6ll79LXwa_VYOqQSUEMFBTaiGEStGf9m8GrI0artTuxzlgzT8blHPGLDX4JtS4bWkxQ4W8IxQ_OyQU7qeVOI_tX3k0K_jExF20vkH9zOapSQtkeH_6n0ufQBt0cKURaxvolfkvVwbQrSEKkEFYkNWhAVJl8p3BUPuBls9miuebrwejhhvCPz8dPvtnfg9r6s3wQksy8v9ZhOzIu_LsmGaohnTubGWdWkAb0JZP0aE2JwWUuxHbqws8_un98dnKsU6YM1bTY9NS04vM-j_aVoMTUWejHScXe1wrb49LC0j2yHfxv-OnhLQ1gViArqyErc6UGYGVyNCCepVdE4j1ngnbbFVRQiNOEtvNfQ1A7auFge8ijUd1nma8IpgSs6D1pDAhn8hTJywc1WoCniaCamqDeuu11_MEFOXFZ5sci9pU3iunD5EKLuIJvSmx7voxKGMs0P9Uu5LmEg-6FAqz2wZooT1yMjbWGAwaaHvMoNzUiN_iZJpvTZvSWMVaCk5rbrU9YCPcFMlApzYq1KWitjoqk4HtDByuIdAm1MH-UIFR4nGwQ8quGOaDY_VqG23y6w7Bl9-y6ATwEmCpeqM8LSeVH7zAw8fdnHK-xN70tjcCZG1JSbG_FnJCbGIM0LZ4PgA1JS8Lyw" />
+      </KeyValuePair>
+    </list>
+  </option>
+  <option name="parameters">
+    <list />
+  </option>
+  <option name="parametersEnabled" value="true" />
+  <option name="haveTextToSend" value="true" />
+  <option name="haveFileToSend" value="false" />
+  <option name="isFileUpload" value="false" />
+  <option name="textToSend" value=" { &quot;grant_type&quot;:&quot;password&quot;, &quot;client_id&quot;:3, &quot;client_secret&quot;:&quot;ErCVNNASITOYGO9IkugiqZHq9KL0YV6ZyitkCSXz&quot;, &quot;username&quot;:&quot;db.unt1tled@gmail.com&quot;, &quot;password&quot;:&quot;12345678&quot;, &quot;scope&quot;:&quot;*&quot; }" />
+  <option name="filesToSend" value="" />
+</RestClientRequest>

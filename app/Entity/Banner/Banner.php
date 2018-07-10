@@ -8,6 +8,8 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 /**
+ * App\Entity\Banner\Banner
+ *
  * @property int $id
  * @property int $user_id
  * @property int $category_id
@@ -22,12 +24,30 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $file
  * @property string $status
  * @property Carbon $published_at
- *
  * @property Region|null $region
  * @property Category $category
- *
  * @method Builder active()
  * @method Builder forUser(User $user)
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
+ * @property-read \App\Entity\User $user
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Banner\Banner whereCategoryId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Banner\Banner whereClicks($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Banner\Banner whereCost($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Banner\Banner whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Banner\Banner whereFile($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Banner\Banner whereFormat($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Banner\Banner whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Banner\Banner whereLimit($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Banner\Banner whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Banner\Banner wherePublishedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Banner\Banner whereRegionId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Banner\Banner whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Banner\Banner whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Banner\Banner whereUrl($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Banner\Banner whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Banner\Banner whereViews($value)
+ * @mixin \Eloquent
  */
 class Banner extends Model
 {

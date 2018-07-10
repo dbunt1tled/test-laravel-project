@@ -27,6 +27,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Region whereParentId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Region whereSlug($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Region whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Region roots()
  */
 class Region extends Model
 {

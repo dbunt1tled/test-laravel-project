@@ -50,6 +50,8 @@ use Illuminate\Support\Carbon;
  * @property-read \App\Entity\Region|null $region
  * @property-read \App\Entity\User $user
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entity\Adverts\Advert\Value[] $values
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entity\User[] $favorites
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entity\Adverts\Advert\Photo[] $photos
  */
 class Advert extends Model
 {

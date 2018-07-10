@@ -6,56 +6,47 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Cabinet\Phone\AuthRequest;
 use App\Http\Requests\Cabinet\Phone\VerifyRequest;
 use App\Services\Sms\SmsSender;
+use App\UseCases\Profile\PhoneService;
 use Illuminate\Support\Carbon;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PhoneController extends Controller
 {
-    private $sms;
-
-    public function __construct(SmsSender $sms)
+    private $service;
+    public function __construct(PhoneService $service)
     {
-        $this->sms = $sms;
+        $this->service = $service;
     }
 
-    public function request(Request $request)
+    public function request()
     {
-        $user = \Auth::user();
-        try{
-            $token = $user->requestPhoneVerification(Carbon::now());
-            $this->sms->send($user->phone,'Ваш код подтверждения телефона: '.$token);
-        }catch (\DomainException $ex){
-            $request->session()->flash('error',$ex->getMessage());
+        try {
+            $this->service->request(Auth::id());
+        } catch (\DomainException $e) {
+            return redirect()->back()->with('error', $e->getMessage());
         }
         return redirect()->route('cabinet.profile.phone');
     }
 
     public function form()
     {
-        $user = \Auth::user();
+        $user = Auth::user();
         return view('cabinet.profile.phone',compact('user'));
     }
 
     public function verify(VerifyRequest $request)
     {
-        $user = \Auth::user();
-        try{
-            $user->verifyPhone($request->token,Carbon::now());
-        }catch (\DomainException $ex){
-            flash($ex->getMessage())->warning();
-            return redirect()->route('cabinet.profile.phone');
+        try {
+            $this->service->verify(Auth::id(), $request);
+        } catch (\DomainException $e) {
+            return redirect()->route('cabinet.profile.phone')->with('error', $e->getMessage());
         }
         return redirect()->route('cabinet.profile.home');
     }
 
-    public function auth(AuthRequest $request)
+    public function auth()
     {
-        $user = \Auth::user();
-        if($request->phoneAuthEnable){
-            $user->enablePhoneAuth();
-        }else{
-            $user->disablePhoneAuth();
-        }
+        $this->service->toggleAuth(Auth::id());
         return redirect()->route('cabinet.profile.home');
     }
 
