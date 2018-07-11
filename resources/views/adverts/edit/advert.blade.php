@@ -52,7 +52,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="content" class="col-form-label">Текст объявления</label>
-                                            <textarea id="content" class="form-control {{ $errors->has('content')? 'is-invalid':'' }}" rows="10" name="content" required>{{ old('content', $advert->content) }}</textarea>
+                                            <textarea id="content" class="form-control summernote {{ $errors->has('content')? 'is-invalid':'' }}" rows="10" name="content" required>{{ old('content', $advert->content) }}</textarea>
                                             @if($errors->has('content'))
                                                 <span class="invalid-feedback"><strong>{{ $errors->first('content') }}</strong></span>
                                             @endif

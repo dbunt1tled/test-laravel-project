@@ -121,6 +121,16 @@ Route::group(
         Route::post('/users/{user}/verify', 'UsersController@verify')->name('users.verify');
         Route::resource('users', 'UsersController');
         Route::resource('region', 'RegionController');
+
+        Route::resource('pages', 'PageController');
+
+        Route::group(['prefix' => 'pages/{page}', 'as' => 'pages.'], function () {
+            Route::post('/first', 'PageController@first')->name('first');
+            Route::post('/up', 'PageController@up')->name('up');
+            Route::post('/down', 'PageController@down')->name('down');
+            Route::post('/last', 'PageController@last')->name('last');
+        });
+
         Route::group(['prefix' => 'adverts', 'as' => 'adverts.', 'namespace' => 'Adverts'], function () {
             Route::resource('category', 'CategoryController');
             Route::group(['prefix' => 'category/{category}', 'as' => 'category.'], function () {
@@ -156,5 +166,19 @@ Route::group(
             Route::post('/{banner}/pay', 'BannerController@pay')->name('pay');
             Route::delete('/{banner}/destroy', 'BannerController@destroy')->name('destroy');
         });
+        Route::group(['prefix' => 'tickets', 'as' => 'tickets.'], function () {
+            Route::get('/', 'TicketController@index')->name('index');
+            Route::get('/{ticket}/show', 'TicketController@show')->name('show');
+            Route::get('/{ticket}/edit', 'TicketController@editForm')->name('edit');
+            Route::put('/{ticket}/edit', 'TicketController@edit');
+            Route::post('{ticket}/message', 'TicketController@message')->name('message');
+            Route::post('/{ticket}/close', 'TicketController@close')->name('close');
+            Route::post('/{ticket}/approve', 'TicketController@approve')->name('approve');
+            Route::post('/{ticket}/reopen', 'TicketController@reopen')->name('reopen');
+            Route::delete('/{ticket}/destroy', 'TicketController@destroy')->name('destroy');
+        });
+
     }
 );
+
+Route::get('/{page_path}', 'PageController@show')->name('page')->where('page_path', '.+');

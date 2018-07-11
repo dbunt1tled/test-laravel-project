@@ -1,5 +1,5 @@
 let mix = require('laravel-mix');
-
+let webpack = require('webpack');
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -16,3 +16,9 @@ mix.setPublicPath('public/build')
    .js('resources/assets/js/app.js', 'js')
    .sass('resources/assets/sass/app.scss', 'css')
    .version();
+
+mix.webpackConfig({
+    plugins: [
+        new webpack.IgnorePlugin(/^codemirror$/)
+    ]
+});

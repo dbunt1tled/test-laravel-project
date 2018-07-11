@@ -10,6 +10,7 @@ use App\Services\Sms\SmsRu;
 use App\Services\Sms\SmsSender;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Foundation\Application;
 use Laravel\Passport\Passport;

@@ -33,10 +33,20 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="address" class="col-form-label">Адрес</label>
-                                            <input type="text" id="address" class="form-control {{ $errors->has('address')? 'is-invalid':'' }}" name="address" value="{{ old('address',$region->getAddress()) }}" required>
-                                            @if($errors->has('address'))
-                                                <span class="invalid-feedback"><strong>{{ $errors->first('address') }}</strong></span>
-                                            @endif
+
+                                            <div class="row">
+                                                <div class="col-md-11">
+                                                    <input id="address" type="text" class="form-control{{ $errors->has('address') ? ' is-invalid' : '' }}" name="address" value="{{ old('address', $region->getAddress()) }}" required>
+                                                    @if ($errors->has('address'))
+                                                        <span class="invalid-feedback"><strong>{{ $errors->first('address') }}</strong></span>
+                                                    @endif
+                                                </div>
+                                                <div class="col-md-1">
+                                                    <span class="btn btn-primary btn-block location-button" data-target="#address"><span class="fa fa-location-arrow"></span></span>
+                                                </div>
+                                            </div>
+
+
                                         </div>
                                     </div>
                                     <div class="col-md-12">

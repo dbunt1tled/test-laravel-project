@@ -11,9 +11,9 @@ if (! function_exists('adverts_path')) {
 }
 
 if (! function_exists('page_path')) {
-    function page_path(Page $page)
+    function page_path(\App\Entity\Page $page)
     {
-        return app()->make(PagePath::class)
+        return app()->make(\App\Http\Router\PagePath::class)
                     ->withPage($page);
     }
 }
