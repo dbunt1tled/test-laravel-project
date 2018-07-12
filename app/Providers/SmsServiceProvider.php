@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Services\Sms\ArraySender;
 use App\Services\Sms\SmsRu;
+use App\Services\Sms\Telegram;
 use App\Services\Sms\SmsSender;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Foundation\Application;
@@ -38,6 +39,12 @@ class SmsServiceProvider extends ServiceProvider
                     return new SmsRu($config['appId']);
                 case 'array':
                     return new ArraySender();
+                case 'telegram':
+                    $params = $config['drivers']['telegram'];
+                    if(!empty($params['url'])){
+                        return new Telegram($params['appId'],$params['url']);
+                    }
+                    return new Telegram($config['appId']);
                 default:
                     throw new \InvalidArgumentException('Не верный смс драйвер: '.$config['driver']);
             }

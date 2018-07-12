@@ -7,6 +7,7 @@ use App\Entity\Banner\Banner;
 use App\Entity\User;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Laravel\Horizon\Horizon;
 use Laravel\Passport\Passport;
 
 class AuthServiceProvider extends ServiceProvider
@@ -32,9 +33,15 @@ class AuthServiceProvider extends ServiceProvider
         Passport::routes();
         Passport::tokensExpireIn(now()->addDays(15));
         Passport::refreshTokensExpireIn(now()->addDays(30));
+        Horizon::auth(function ($request) {
+            return Gate::allows('horizon');
+        });
     }
     private function registerPermission(): void
     {
+        Gate::define('horizon',function (User $user){
+            return ($user->isAdmin() || $user->isModerator());
+        });
         Gate::define('admin-panel',function (User $user){
             return ($user->isAdmin() || $user->isModerator());
         });

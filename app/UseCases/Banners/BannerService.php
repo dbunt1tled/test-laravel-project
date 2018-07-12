@@ -151,7 +151,7 @@ class BannerService
     }
     private function getBanner($id): Banner
     {
-        return Banner::findOrFail($id)->first();
+        return Banner::findOrFail($id);
     }
     public function removeByOwner($id): void
     {

@@ -12,12 +12,14 @@ use App\Entity\Adverts\Advert\Advert;
 use App\Entity\Adverts\Category;
 use App\Entity\Region;
 use App\Entity\User;
+use App\Events\Advert\ModerationPassed;
 use App\Http\Requests\Adverts\AttributesRequest;
 use App\Http\Requests\Adverts\CreateRequest;
 use App\Http\Requests\Adverts\EditRequest;
 use App\Http\Requests\Adverts\PhotosRequest;
 use App\Http\Requests\Adverts\RejectRequest;
 use App\Mail\Auth\AdvertFavoritePrice;
+use App\Notifications\Advert\ModerationPassedNotification;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -92,13 +94,14 @@ class AdvertService
      */
     private function getAdvert($id)
     {
-        return Advert::findOrFail($id)->first();
+        return Advert::findOrFail($id);
     }
 
     public function moderate($id)
     {
         $advert = $this->getAdvert($id);
         $advert->moderate(Carbon::now());
+        event(new ModerationPassed($advert));
     }
     public function sendToModeration($id)
     {

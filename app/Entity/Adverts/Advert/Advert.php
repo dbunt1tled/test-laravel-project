@@ -78,7 +78,7 @@ class Advert extends Model
                 'class' => 'success',
             ],
             self::STATUS_CLOSED => [
-                'text' => 'Ожидает подтверждения',
+                'text' => 'Закрыт',
                 'class' => 'dark',
             ],
             self::STATUS_MODERATION => [
@@ -86,7 +86,7 @@ class Advert extends Model
                 'class' => 'warning',
             ],
             self::STATUS_DRAFT => [
-                'text' => 'Ожидает подтверждения',
+                'text' => 'Черновик',
                 'class' => 'info',
             ],
         ];

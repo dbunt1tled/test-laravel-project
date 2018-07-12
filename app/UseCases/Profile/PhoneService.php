@@ -43,6 +43,6 @@ class PhoneService
     }
     private function getUser($id): User
     {
-        return User::findOrFail($id)->first();
+        return User::findOrFail($id);
     }
 }

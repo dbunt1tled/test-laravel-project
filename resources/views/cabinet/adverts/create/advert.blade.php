@@ -72,13 +72,13 @@
                                             <select id="attribute_{{ $attribute->id }}" class="form-control{{ $errors->has('attribute.'.$attribute->id)? 'is-invalid' : '' }}" name="attribute[{{$attribute->id}}]">
                                                 <option value=""></option>
                                                 @foreach($attribute->variants as $variant)
-                                                    <option value="{{$variant}}" {{$variant == old('$attributes.'.$attribute->id,$advert->getValue($attribute->id))?'selected':''}}>{{ $variant }}</option>
+                                                    <option value="{{$variant}}" {{$variant == old('$attributes.'.$attribute->id)?'selected':''}}>{{ $variant }}</option>
                                                 @endforeach
                                             </select>
                                         @elseif($attribute->isNumber())
-                                            <input type="number" id="attribute_{{ $attribute->id }}" value="{{ old('$attribute.'.$attribute->id,$advert->getValue($attribute->id)) }}" class="form-control{{ $errors->has('attribute.'.$attribute->id)? 'is-invalid' : '' }}" name="attribute[{{$attribute->id}}]">
+                                            <input type="number" id="attribute_{{ $attribute->id }}" value="{{ old('$attribute.'.$attribute->id) }}" class="form-control{{ $errors->has('attribute.'.$attribute->id)? 'is-invalid' : '' }}" name="attribute[{{$attribute->id}}]">
                                         @else
-                                            <input type="text" id="attribute_{{ $attribute->id }}" value="{{ old('attribute.'.$attribute->id,$advert->getValue($attribute->id)) }}" class="form-control{{ $errors->has('attribute.'.$attribute->id)? 'is-invalid' : '' }}" name="attribute[{{$attribute->id}}]">
+                                            <input type="text" id="attribute_{{ $attribute->id }}" value="{{ old('attribute.'.$attribute->id) }}" class="form-control{{ $errors->has('attribute.'.$attribute->id)? 'is-invalid' : '' }}" name="attribute[{{$attribute->id}}]">
                                         @endif
                                         @if($errors->has('attribute.'.$attribute->id))
                                             <span class="invalid-feedback"><strong>{{ $errors->first('attribute.'.$attribute->id) }}</strong></span>

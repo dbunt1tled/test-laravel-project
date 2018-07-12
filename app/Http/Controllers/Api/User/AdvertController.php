@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\Adverts;
+namespace App\Http\Controllers\Api\User;
 
 use App\Entity\Adverts\Advert\Advert;
 use App\Entity\Adverts\Category;

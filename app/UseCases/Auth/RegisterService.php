@@ -11,6 +11,7 @@ namespace App\UseCases\Auth;
 use App\Entity\User;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Mail\Auth\AdvertFavoritePrice;
+use App\Services\NewsLetter\NewsLetter;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Contracts\Mail\Mailer;
@@ -19,9 +20,11 @@ class RegisterService
 {
     private $mailer;
     private $dispatcher;
+    private $newsletter;
 
-    public function __construct(Mailer $mailer, Dispatcher $dispatcher)
+    public function __construct(Mailer $mailer, Dispatcher $dispatcher, NewsLetter $newsLetter)
     {
+        $this->newsletter = $newsLetter;
         $this->mailer = $mailer;
         $this->dispatcher = $dispatcher;
     }
@@ -38,5 +41,6 @@ class RegisterService
         /** @var User $user */
         $user = User::findOrFail($id);
         $user->verify();
+        $this->newsletter->subscribe($user->email);
     }
 }

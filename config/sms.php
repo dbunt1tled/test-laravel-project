@@ -9,6 +9,10 @@ return[
             'appId' => env('SMS_RU_APP_ID'),
             'url' => env('SMS_RU_URL'),
         ],
+        'telegram' => [
+            'appId' => env('TELEGRAM_BOT_TOKEN'),
+            'url' => env('TELEGRAM_URL'),
+        ],
     ],
 
 ];

@@ -15,7 +15,7 @@ class ProfileService
     public function edit($id, UpdateRequest $request): void
     {
         /** @var User $user */
-        $user = User::findOrFail($id)->first();
+        $user = User::findOrFail($id);
         $oldPhone = $user->phone;
         $user->update($request->only('name', 'last_name', 'phone'));
         if ($user->phone !== $oldPhone) {

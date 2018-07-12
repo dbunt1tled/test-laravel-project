@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Entity\Adverts\Category;
 use App\Entity\Region;
 use App\Services\Banner\CostCalculator;
+use App\Services\NewsLetter\NewsLetter;
 use App\Services\Sms\ArraySender;
 use App\Services\Sms\SmsRu;
 use App\Services\Sms\SmsSender;
@@ -37,6 +38,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(CostCalculator::class, function (Application $app) {
             $config = $app->make('config')->get('banner');
             return new CostCalculator($config['price']);
+        });
+        $this->app->singleton(NewsLetter::class, function (Application $app) {
+            $config = $app->make('config')->get('mailchimp');
+            return new \App\Services\NewsLetter\MailChimp(new \DrewM\MailChimp\MailChimp($config['key']),$config['list_id']);
         });
         //Можно скопировать миграции из вендор к себе и чтоб не активизировались из вендора прописываем:
         //Passport::ignoreMigrations();

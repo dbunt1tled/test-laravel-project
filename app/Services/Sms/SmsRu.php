@@ -37,5 +37,6 @@ class SmsRu implements SmsSender
                 'text' => $text
             ],
         ]);
+
     }
 }

@@ -64,6 +64,6 @@ class TicketService
 
     private function getTicket($id): Ticket
     {
-        return Ticket::findOrFail($id)->first();
+        return Ticket::findOrFail($id);
     }
 }

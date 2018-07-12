@@ -3,7 +3,7 @@ namespace PHPSTORM_META {
 
    /**
     * PhpStorm Meta file, to provide autocomplete information for PhpStorm
-    * Generated on 2018-07-10 21:12:55.
+    * Generated on 2018-07-12 21:40:54.
     *
     * @author Barry vd. Heuvel <barryvdh@gmail.com>
     * @see https://github.com/barryvdh/laravel-ide-helper
@@ -61,7 +61,8 @@ namespace PHPSTORM_META {
         'League\OAuth2\Server\AuthorizationServer' => \League\OAuth2\Server\AuthorizationServer::class,
         'League\OAuth2\Server\ResourceServer' => \League\OAuth2\Server\ResourceServer::class,
         'App\Services\Banner\CostCalculator' => \App\Services\Banner\CostCalculator::class,
-        'App\Services\Sms\SmsSender' => \App\Services\Sms\SmsRu::class,
+        'App\Services\NewsLetter\NewsLetter' => \App\Services\NewsLetter\MailChimp::class,
+        'App\Services\Sms\SmsSender' => \App\Services\Sms\Telegram::class,
         'Elasticsearch\Client' => \Elasticsearch\Client::class,
         'blade.compiler' => \Illuminate\View\Compilers\BladeCompiler::class,
         'Illuminate\Console\Scheduling\Schedule' => \Illuminate\Console\Scheduling\Schedule::class,
@@ -225,7 +226,8 @@ namespace PHPSTORM_META {
         'League\OAuth2\Server\AuthorizationServer' => \League\OAuth2\Server\AuthorizationServer::class,
         'League\OAuth2\Server\ResourceServer' => \League\OAuth2\Server\ResourceServer::class,
         'App\Services\Banner\CostCalculator' => \App\Services\Banner\CostCalculator::class,
-        'App\Services\Sms\SmsSender' => \App\Services\Sms\SmsRu::class,
+        'App\Services\NewsLetter\NewsLetter' => \App\Services\NewsLetter\MailChimp::class,
+        'App\Services\Sms\SmsSender' => \App\Services\Sms\Telegram::class,
         'Elasticsearch\Client' => \Elasticsearch\Client::class,
         'blade.compiler' => \Illuminate\View\Compilers\BladeCompiler::class,
         'Illuminate\Console\Scheduling\Schedule' => \Illuminate\Console\Scheduling\Schedule::class,
@@ -389,7 +391,8 @@ namespace PHPSTORM_META {
         'League\OAuth2\Server\AuthorizationServer' => \League\OAuth2\Server\AuthorizationServer::class,
         'League\OAuth2\Server\ResourceServer' => \League\OAuth2\Server\ResourceServer::class,
         'App\Services\Banner\CostCalculator' => \App\Services\Banner\CostCalculator::class,
-        'App\Services\Sms\SmsSender' => \App\Services\Sms\SmsRu::class,
+        'App\Services\NewsLetter\NewsLetter' => \App\Services\NewsLetter\MailChimp::class,
+        'App\Services\Sms\SmsSender' => \App\Services\Sms\Telegram::class,
         'Elasticsearch\Client' => \Elasticsearch\Client::class,
         'blade.compiler' => \Illuminate\View\Compilers\BladeCompiler::class,
         'Illuminate\Console\Scheduling\Schedule' => \Illuminate\Console\Scheduling\Schedule::class,
@@ -553,7 +556,8 @@ namespace PHPSTORM_META {
         'League\OAuth2\Server\AuthorizationServer' => \League\OAuth2\Server\AuthorizationServer::class,
         'League\OAuth2\Server\ResourceServer' => \League\OAuth2\Server\ResourceServer::class,
         'App\Services\Banner\CostCalculator' => \App\Services\Banner\CostCalculator::class,
-        'App\Services\Sms\SmsSender' => \App\Services\Sms\SmsRu::class,
+        'App\Services\NewsLetter\NewsLetter' => \App\Services\NewsLetter\MailChimp::class,
+        'App\Services\Sms\SmsSender' => \App\Services\Sms\Telegram::class,
         'Elasticsearch\Client' => \Elasticsearch\Client::class,
         'blade.compiler' => \Illuminate\View\Compilers\BladeCompiler::class,
         'Illuminate\Console\Scheduling\Schedule' => \Illuminate\Console\Scheduling\Schedule::class,
@@ -717,7 +721,8 @@ namespace PHPSTORM_META {
         'League\OAuth2\Server\AuthorizationServer' => \League\OAuth2\Server\AuthorizationServer::class,
         'League\OAuth2\Server\ResourceServer' => \League\OAuth2\Server\ResourceServer::class,
         'App\Services\Banner\CostCalculator' => \App\Services\Banner\CostCalculator::class,
-        'App\Services\Sms\SmsSender' => \App\Services\Sms\SmsRu::class,
+        'App\Services\NewsLetter\NewsLetter' => \App\Services\NewsLetter\MailChimp::class,
+        'App\Services\Sms\SmsSender' => \App\Services\Sms\Telegram::class,
         'Elasticsearch\Client' => \Elasticsearch\Client::class,
         'blade.compiler' => \Illuminate\View\Compilers\BladeCompiler::class,
         'Illuminate\Console\Scheduling\Schedule' => \Illuminate\Console\Scheduling\Schedule::class,
@@ -881,7 +886,8 @@ namespace PHPSTORM_META {
         'League\OAuth2\Server\AuthorizationServer' => \League\OAuth2\Server\AuthorizationServer::class,
         'League\OAuth2\Server\ResourceServer' => \League\OAuth2\Server\ResourceServer::class,
         'App\Services\Banner\CostCalculator' => \App\Services\Banner\CostCalculator::class,
-        'App\Services\Sms\SmsSender' => \App\Services\Sms\SmsRu::class,
+        'App\Services\NewsLetter\NewsLetter' => \App\Services\NewsLetter\MailChimp::class,
+        'App\Services\Sms\SmsSender' => \App\Services\Sms\Telegram::class,
         'Elasticsearch\Client' => \Elasticsearch\Client::class,
         'blade.compiler' => \Illuminate\View\Compilers\BladeCompiler::class,
         'Illuminate\Console\Scheduling\Schedule' => \Illuminate\Console\Scheduling\Schedule::class,
@@ -1045,7 +1051,8 @@ namespace PHPSTORM_META {
         'League\OAuth2\Server\AuthorizationServer' => \League\OAuth2\Server\AuthorizationServer::class,
         'League\OAuth2\Server\ResourceServer' => \League\OAuth2\Server\ResourceServer::class,
         'App\Services\Banner\CostCalculator' => \App\Services\Banner\CostCalculator::class,
-        'App\Services\Sms\SmsSender' => \App\Services\Sms\SmsRu::class,
+        'App\Services\NewsLetter\NewsLetter' => \App\Services\NewsLetter\MailChimp::class,
+        'App\Services\Sms\SmsSender' => \App\Services\Sms\Telegram::class,
         'Elasticsearch\Client' => \Elasticsearch\Client::class,
         'blade.compiler' => \Illuminate\View\Compilers\BladeCompiler::class,
         'Illuminate\Console\Scheduling\Schedule' => \Illuminate\Console\Scheduling\Schedule::class,
